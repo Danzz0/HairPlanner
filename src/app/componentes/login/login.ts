@@ -1,23 +1,38 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  template: `
-    <div style="padding: 40px; text-align: center;">
-      <h1>Login</h1>
-      <p>Página de login em desenvolvimento.</p>
-      <button (click)="voltarParaHome()" style="padding: 10px 20px; margin-top: 20px;">
-        Voltar para Home
-      </button>
-    </div>
-  `
+  imports: [CommonModule, FormsModule],
+  templateUrl: './login.html',
+  styleUrl: './login.css',
 })
 export class Login {
-  constructor(private roteador: Router) {}
+  modoCadastro = false;
 
-  voltarParaHome() {
-    this.roteador.navigate(['/']);
+  login = {
+    email: '',
+    senha: '',
+  };
+
+  cadastro = {
+    nome: '',
+    email: '',
+    senha: '',
+  };
+
+  alternarModo() {
+    this.modoCadastro = !this.modoCadastro;
+  }
+
+  fazerLogin() {
+    console.log('Login:', this.login);
+  }
+
+  fazerCadastro() {
+    console.log('Cadastro:', this.cadastro);
   }
 }

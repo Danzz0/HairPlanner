@@ -14,7 +14,13 @@ export const routes: Routes = [
     loadComponent: () => import('./componentes/dashboard/dashboard').then(m => m.Dashboard)
   },
   {
+    path: 'formulario',
+      loadComponent: () => import('./componentes/formulario/formulario').then(m => m.Formulario)
+  },
+  {
     path: '**',
     redirectTo: ''
-  }
+  },
+
 ];
+

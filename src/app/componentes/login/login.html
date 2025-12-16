@@ -1,1 +1,69 @@
-<p>login works!</p>
+<div class="container">
+    <div class="card">
+      <h1>HairPlanner</h1>
+  
+      <p class="subtitle">
+        {{ modoCadastro ? 'Cadastro' : 'Login' }}
+      </p>
+  
+      <!-- LOGIN -->
+      <form *ngIf="!modoCadastro">
+        <input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="login.email"
+          name="email"
+        />
+  
+        <input
+          type="password"
+          placeholder="Senha"
+          [(ngModel)]="login.senha"
+          name="senha"
+        />
+  
+        <button type="button" (click)="fazerLogin()">
+          Login
+        </button>
+  
+        <p class="toggle">
+          Não tem conta?
+          <span (click)="alternarModo()">Cadastre-se</span>
+        </p>
+      </form>
+  
+      <!-- CADASTRO -->
+      <form *ngIf="modoCadastro">
+        <input
+          type="text"
+          placeholder="Nome"
+          [(ngModel)]="cadastro.nome"
+          name="nome"
+        />
+  
+        <input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="cadastro.email"
+          name="email"
+        />
+  
+        <input
+          type="password"
+          placeholder="Senha"
+          [(ngModel)]="cadastro.senha"
+          name="senha"
+        />
+  
+        <button type="button" (click)="fazerCadastro()">
+          Cadastrar
+        </button>
+  
+        <p class="toggle">
+          Já tem conta?
+          <span (click)="alternarModo()">Login</span>
+        </p>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,65 @@
+<div class="container">
+    <h1>HairPlanner</h1>
+    <p class="subtitle">
+      Vamos conhecer seu cabelo para criar um cronograma perfeito
+    </p>
+  
+    <!-- Pergunta 1 -->
+    <div class="card">
+      <h2>Qual a curvatura do seu cabelo?</h2>
+      <div class="options">
+        <button
+          *ngFor="let c of curvaturas"
+          (click)="selecionarCurvatura(c)"
+          [class.selected]="form.curvatura === c"
+        >
+          {{ c }}
+        </button>
+      </div>
+    </div>
+  
+    <!-- Pergunta 2 -->
+    <div class="card">
+      <h2>Quanto o seu cabelo é seco?</h2>
+      <div class="scale">
+        <button
+          *ngFor="let n of escala"
+          (click)="selecionarRessecamento(n)"
+          [class.selected]="form.ressecamento === n"
+        >
+          {{ n }}
+        </button>
+      </div>
+    </div>
+  
+    <!-- Pergunta 3 -->
+    <div class="card">
+      <h2>Quantas vezes por semana você lava seu cabelo?</h2>
+      <div class="scale">
+        <button
+          *ngFor="let n of escala"
+          (click)="selecionarLavagens(n)"
+          [class.selected]="form.lavagens === n"
+        >
+          {{ n }}
+        </button>
+      </div>
+    </div>
+  
+    <!-- Pergunta 4 -->
+    <div class="card">
+      <h2>Você tem o costume de cuidar do seu cabelo regularmente?</h2>
+      <div class="scale">
+        <button
+          *ngFor="let n of escala"
+          (click)="selecionarCuidado(n)"
+          [class.selected]="form.cuidado === n"
+        >
+          {{ n }}
+        </button>
+      </div>
+    </div>
+  
+    <button class="submit" (click)="enviar()">Finalizar</button>
+  </div>
+  

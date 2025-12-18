@@ -6,7 +6,7 @@ import { Curvatura } from '../../models/Enums';
 @Component({
   selector: 'app-formulario',
   standalone: true,
-  imports: [CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './formulario.html',
   styleUrl: './formulario.css',
 })
@@ -16,14 +16,21 @@ import { Curvatura } from '../../models/Enums';
 export class Formulario {
 
   formNameFormulario: FormGroup;
-
   fb: FormBuilder = inject(FormBuilder);
   
+  
+  curvaturas = Object.values(Curvatura).filter(value => typeof value === 'string'); //obter apenas as strings da enum, sem os indices
+  escala = [1, 2, 3, 4, 5];
+
+
+
   constructor (){
+    
+
     this.formNameFormulario = this.fb.group({
 
       // CAMPOS DO FORMULARIO
-      cruvatura: ['', Validators.required],
+      curvatura: ['', Validators.required],
       ressecamento: ['', Validators.required],
       qtdLavagens: ['', Validators.required],
       cuidados: ['', Validators.required]
@@ -31,40 +38,22 @@ export class Formulario {
 
     })
   }
-/*
-
-  curvaturas = ['Liso', 'Ondulado', 'Cacheado', 'Crespo'];
-  escala = [1, 2, 3, 4, 5];
 
 
 
-
-
-
-  form = {
-    curvatura: '',
-    ressecamento: 0,
-    lavagens: 0,
-    cuidado: 0,
-  };
-
-  selecionarCurvatura(valor: string) {
-    this.form.curvatura = valor;
-  }
-
-  selecionarRessecamento(valor: number) {
-    this.form.ressecamento = valor;
-  }
-
-  selecionarLavagens(valor: number) {
-    this.form.lavagens = valor;
-  }
-
-  selecionarCuidado(valor: number) {
-    this.form.cuidado = valor;
-  }
 
   enviar() {
-    console.log('Dados do formulário:', this.form);
-  }*/
+    const curvatura = this.formNameFormulario.value.curvatura;
+    const ressecamento = this.formNameFormulario.value.ressecamento;
+    const qtdLavagens = this.formNameFormulario.value.qtdLavagens;
+    const cuidados = this.formNameFormulario.value.cuidados;
+
+
+
+    //enviar para o banco de dados
+  }
+
+
+
+
 }

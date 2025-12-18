@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="card">
+      <h1>HairPlanner</h1>
+  
+      <p class="subtitle">
+        Cadastro
+      </p>
+
+<!-- CADASTRO -->
+      <form [formGroup]="formNameCadastro">
+        <input
+          type="text"
+          placeholder="Nome"
+          formControlName="NoUsuario"
+          name="nome"
+        />
+  
+        <input
+          type="email"
+          placeholder="Email"
+          formControlName="Email"
+          name="email"
+        />
+
+        <input
+          type="date"
+          placeholder="Data de Nascimento"
+          formControlName="DaNascimento"
+          name="dataNascimento"
+        />
+
+        <input
+          type="text"
+          placeholder="CEP"
+          formControlName="Cep"
+          name="cep"
+          maxlength="8" 
+        />
+
+        <input
+          type="text"
+          placeholder="Telefone"
+          formControlName="Telefone"
+          name="telefone"
+          maxlength="11"
+        />
+  
+        <input
+          type="password"
+          placeholder="Senha"
+          formControlName="Senha"
+          name="senha"
+        />
+  
+        <button type="button" (click)="fazerCadastro()">
+          Cadastrar
+        </button>
+  
+        <p class="toggle">
+          Já tem conta?
+          <span (click)="navegarParaLogin()">Login</span>
+        </p>
+      </form>
+    </div>
+  </div>

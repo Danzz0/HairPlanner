@@ -1,74 +1,74 @@
-<form [formGroup]="formName">
-    <div class="container">
+<form [formGroup]="formNameFormulario" >
+  <div class="container">
     <h1>HairPlanner</h1>
     <p class="subtitle">
       Vamos conhecer seu cabelo para criar um cronograma perfeito
     </p>
-  
+
     <!-- Pergunta 1 -->
-    <!-- <div class="card">
+    <div class="card">
       <h2>Qual a curvatura do seu cabelo?</h2>
       <div class="options">
         <button
+          type="button"
           *ngFor="let c of curvaturas"
-          (click)="selecionarCurvatura(c)"
-          [class.selected]="form.curvatura === c"
+          (click)="formNameFormulario.get('curvatura')?.setValue(c)"
+          [class.selected]="formNameFormulario.get('curvatura')?.value == c"
         >
           {{ c }}
         </button>
       </div>
-    </div> -->
-  
+    </div>
+
     <!-- Pergunta 2 -->
     <div class="card">
       <h2>Como você descreveria o nível de ressecamento do seu cabelo</h2>
       <div class="scale">
         <button
+          type="button"
           *ngFor="let n of escala"
-          (click)="selecionarRessecamento(n)"
-          [class.selected]="form.ressecamento === n"
+          (click)="formNameFormulario.get('ressecamento')?.setValue(n)"
+          [class.selected]="formNameFormulario.get('ressecamento')?.value == n"
         >
           {{ n }}
         </button>
       </div>
     </div>
-  
+
     <!-- Pergunta 3 -->
     <div class="card">
       <h2>Quantas vezes por semana você lava seu cabelo?</h2>
       <div class="scale">
         <button
+          type="button"
           *ngFor="let n of escala"
-          (click)="selecionarLavagens(n)"
-          [class.selected]="form.lavagens === n"
+          (click)="formNameFormulario.get('qtdLavagens')?.setValue(n)"
+          [class.selected]="formNameFormulario.get('qtdLavagens')?.value == n"
         >
           {{ n }}
         </button>
       </div>
     </div>
-  
+
     <!-- Pergunta 4 -->
     <div class="card">
       <h2>Você tem o costume de cuidar do seu cabelo regularmente?</h2>
       <div class="scale">
-        <button
-          *ngFor="let n of escala"
-          (click)="selecionarCuidado(n)"
-          [class.selected]="form.cuidado === n"
-        >
-          {{ n }}
-        </button>
+      <button
+        type="button"
+        *ngFor="let n of escala"
+        (click)="formNameFormulario.get('cuidados')?.setValue(n)"
+        [class.selected]="formNameFormulario.get('cuidados')?.value == n"
+      >
+        {{ n }}
+      </button>
       </div>
     </div>
-  
-    <button class="submit" (click)="enviar()">Finalizar</button>
+
+    <button class="submit" [disabled]="formNameFormulario.invalid" (click)="enviar()">Finalizar</button>
   </div>
 </form>
 
-
-
-<!-- <form [formGroup]="formName">
-    <input id="filme" formControlName="filme" type="text" placeholder="Nome do Filme" />
-    <button type="submit" [disabled]="formName.invalid" (click)="obterFilmePeloNome()">Buscar</button>
-</form> -->
+<!-- Comentário: Mantive a estrutura original, mas as opções agora atualizam diretamente os FormControls
+     usando setValue e o formulário submete via (ngSubmit). -->
   

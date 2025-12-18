@@ -1,38 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Usuario } from '../../models/Usuario';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
+
 export class Login {
+
+  formNameLogin: FormGroup;
+  fb: FormBuilder = inject(FormBuilder);
   modoCadastro = false;
+  private usuario: Usuario = {} as Usuario;
 
-  login = {
-    email: '',
-    senha: '',
-  };
 
-  cadastro = {
-    nome: '',
-    email: '',
-    senha: '',
-  };
+  constructor (private roteador: Router) {
+    this.formNameLogin = this.fb.group({
 
-  alternarModo() {
-    this.modoCadastro = !this.modoCadastro;
+      // CAMPOS DO FORMULARIO
+      email: ['', Validators.required],
+      senha: ['', Validators.required]
+    })
   }
+
+
+
+
+
 
   fazerLogin() {
-    console.log('Login:', this.login);
+    const email = this.formNameLogin.value.email;
+    const senha = this.formNameLogin.value.senha;
+    console.log('Login:', email, senha);
+
+
+    // lógica de autenticação aqui
+
+    // Se o login for bem-sucedido, navegue para o dashboard
+    //this.roteador.navigate(['/dashboard']);
   }
 
-  fazerCadastro() {
-    console.log('Cadastro:', this.cadastro);
+
+  navegarParaCadastro() {
+    this.roteador.navigate(['/cadastro']);
   }
+
 }

@@ -3,22 +3,22 @@
       <h1>HairPlanner</h1>
   
       <p class="subtitle">
-        {{ modoCadastro ? 'Cadastro' : 'Login' }}
+        Login
       </p>
   
       <!-- LOGIN -->
-      <form *ngIf="!modoCadastro">
+      <form [formGroup]="formNameLogin">
         <input
           type="email"
           placeholder="Email"
-          [(ngModel)]="login.email"
+          formControlName="email"
           name="email"
         />
   
         <input
           type="password"
           placeholder="Senha"
-          [(ngModel)]="login.senha"
+          formControlName="senha"
           name="senha"
         />
   
@@ -28,42 +28,11 @@
   
         <p class="toggle">
           Não tem conta?
-          <span (click)="alternarModo()">Cadastre-se</span>
+          <span (click)="navegarParaCadastro()">Cadastre-se</span>
         </p>
       </form>
   
-      <!-- CADASTRO -->
-      <form *ngIf="modoCadastro">
-        <input
-          type="text"
-          placeholder="Nome"
-          [(ngModel)]="cadastro.nome"
-          name="nome"
-        />
-  
-        <input
-          type="email"
-          placeholder="Email"
-          [(ngModel)]="cadastro.email"
-          name="email"
-        />
-  
-        <input
-          type="password"
-          placeholder="Senha"
-          [(ngModel)]="cadastro.senha"
-          name="senha"
-        />
-  
-        <button type="button" (click)="fazerCadastro()">
-          Cadastrar
-        </button>
-  
-        <p class="toggle">
-          Já tem conta?
-          <span (click)="alternarModo()">Login</span>
-        </p>
-      </form>
+      
     </div>
   </div>
   

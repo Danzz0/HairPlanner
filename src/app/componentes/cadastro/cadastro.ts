@@ -5,6 +5,7 @@ import { Usuario } from '../../models/Usuario';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../servicos/usuario-service';
 
+
 @Component({
   selector: 'app-cadastro',
   imports: [CommonModule, ReactiveFormsModule],
@@ -34,6 +35,7 @@ export class Cadastro {
       Senha: ['', Validators.required],
 
     });
+
   }
 
 
@@ -56,10 +58,10 @@ export class Cadastro {
       }
     });
 
-    // após isso, vai para dashboard
-    this.navegarParaDashboard();
-  }
 
+    // após isso, vai para dashboard
+    this.navegarParaFormulario();
+  }
 
 
 
@@ -73,6 +75,12 @@ export class Cadastro {
   navegarParaDashboard() {
     this.roteador.navigate(['/dashboard']);
   }
+
+
+  navegarParaFormulario() {
+    this.roteador.navigate(['/formulario']);
+  }
+
 
 
 }

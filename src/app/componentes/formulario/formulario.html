@@ -12,8 +12,8 @@
         <button
           type="button"
           *ngFor="let c of curvaturas"
-          (click)="formNameFormulario.get('curvatura')?.setValue(c)"
-          [class.selected]="formNameFormulario.get('curvatura')?.value == c"
+          (click)="formNameFormulario.get('Curvatura')?.setValue(c)"
+          [class.selected]="formNameFormulario.get('Curvatura')?.value == c"
         >
           {{ c }}
         </button>
@@ -27,8 +27,8 @@
         <button
           type="button"
           *ngFor="let n of escala"
-          (click)="formNameFormulario.get('ressecamento')?.setValue(n)"
-          [class.selected]="formNameFormulario.get('ressecamento')?.value == n"
+          (click)="formNameFormulario.get('NivelRessecamento')?.setValue(n)"
+          [class.selected]="formNameFormulario.get('NivelRessecamento')?.value == n"
         >
           {{ n }}
         </button>
@@ -42,8 +42,8 @@
         <button
           type="button"
           *ngFor="let n of escala"
-          (click)="formNameFormulario.get('qtdLavagens')?.setValue(n)"
-          [class.selected]="formNameFormulario.get('qtdLavagens')?.value == n"
+          (click)="formNameFormulario.get('QtdLavagens')?.setValue(n)"
+          [class.selected]="formNameFormulario.get('QtdLavagens')?.value == n"
         >
           {{ n }}
         </button>
@@ -57,15 +57,15 @@
       <button
         type="button"
         *ngFor="let n of escala"
-        (click)="formNameFormulario.get('cuidados')?.setValue(n)"
-        [class.selected]="formNameFormulario.get('cuidados')?.value == n"
+        (click)="formNameFormulario.get('EscalaCuidado')?.setValue(n)"
+        [class.selected]="formNameFormulario.get('EscalaCuidado')?.value == n"
       >
         {{ n }}
       </button>
       </div>
     </div>
 
-    <button class="submit" [disabled]="formNameFormulario.invalid" (click)="enviar()">Finalizar</button>
+    <button class="submit" [disabled]="formNameFormulario.invalid" (click)="enviarQuestionario()">Finalizar</button>
   </div>
 </form>
 

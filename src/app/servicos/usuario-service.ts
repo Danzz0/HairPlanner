@@ -32,6 +32,12 @@ export class UsuarioService {
     return this.http.get<Usuario[]>(this.apiUrl);
   }
 
+/*
+  obterIdUsuario(): Observable<number> {
+    const url = `${this.apiUrl}/final_id`;
+    return this.http.get<number>(url);
+  }
+*/
 
 }
 

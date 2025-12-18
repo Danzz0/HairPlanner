@@ -1,1 +1,298 @@
-<p>dashboard works!</p>
+<header>
+    <div class="container">
+        <div class="conteudo-cabecalho">
+            <a href="#" class="logo" (click)="mostrarPagina('dashboard', $event)">
+                <div class="logo-icone">
+                    <i class="fas fa-spa"></i>
+                </div>
+                HairPlanner
+            </a>
+            
+            <div class="links-navegacao">
+                <a href="#" (click)="mostrarPagina('dashboard', $event)" [class.ativo]="pagina === 'dashboard'">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="#" (click)="mostrarPagina('calendario', $event)" [class.ativo]="pagina === 'calendario'">
+                    <i class="fas fa-calendar-alt"></i> Calendário
+                </a>
+            </div>
+            
+            <div class="avatar-usuario">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Dashboard -->
+    <div class="pagina" [class.ativo]="pagina === 'dashboard'">
+        <div class="dashboard container">
+            <div class="cabecalho-dashboard">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Bem-vinda de volta, Myllena!</p>
+                </div>
+                <button class="botao botao-primario" (click)="confirmarAtividade()" [disabled]="!tarefaHoje">
+                    <i class="fas fa-check-circle"></i> Confirmar Atividade do Dia
+                </button>
+            </div>
+            
+            <div class="cartoes-dashboard">
+                <!-- Atividade do Dia -->
+                <div class="cartao-dashboard">
+                    <h3><i class="fas fa-sun"></i> Atividade do Dia</h3>
+                    <div class="proxima-sessao" *ngIf="tarefaHoje; else semAtividade">
+                        <h4>{{ traduzirTipoTarefa(tarefaHoje.tipo) }}</h4>
+                        <p><i class="far fa-calendar"></i> {{ formatarData(tarefaHoje.data) }}</p>
+                        <p><i class="fas fa-info-circle"></i> {{ tarefaHoje.descricao }}</p>
+                        <p><i class="fas fa-star"></i> {{ tarefaHoje.pontos }} pontos</p>
+                        <div class="mt-20">
+                            <button class="botao botao-sucesso" (click)="confirmarAtividade()">
+                                <i class="fas fa-check-circle"></i> Marcar como Feita
+                            </button>
+                        </div>
+                    </div>
+                    <ng-template #semAtividade>
+                        <div class="proxima-sessao">
+                            <h4>Nenhuma atividade para hoje</h4>
+                            <p>Clique em um dia no calendário para adicionar uma atividade.</p>
+                            <button class="botao botao-contorno mt-20" (click)="mostrarPagina('calendario')">
+                                <i class="fas fa-calendar-alt"></i> Ir para Calendário
+                            </button>
+                        </div>
+                    </ng-template>
+                </div>
+                
+                <!-- Progresso -->
+                <div class="cartao-dashboard">
+                    <h3><i class="fas fa-chart-line"></i> Progresso</h3>
+                    <div class="circulo-progresso">
+                        <svg>
+                            <circle class="circulo-progresso-fundo" cx="40" cy="40" r="36"></circle>
+                            <circle class="circulo-progresso-preenchimento" 
+                                [attr.stroke-dashoffset]="getProgressoOffset()"
+                                cx="40" cy="40" r="36"></circle>
+                        </svg>
+                        <div class="texto-progresso">{{ progressoPorcentagem }}%</div>
+                    </div>
+                    <p class="texto-centralizado mt-20">{{ tarefasConcluidas }} de {{ tarefas.length }} tarefas concluídas</p>
+                </div>
+                
+                <!-- Sequência de Dias -->
+                <div class="cartao-dashboard">
+                    <h3><i class="fas fa-history"></i> Sequência Atual</h3>
+                    <div class="texto-centralizado" style="font-size: 2.5rem; font-weight: bold; color: #8a4fff; margin: 20px 0;">
+                        {{ sequenciaDias }}
+                    </div>
+                    <p class="texto-centralizado">dias consecutivos com atividades confirmadas</p>
+                    <div class="mt-20">
+                        <div *ngIf="sequenciaDias >= 7" class="proxima-sessao">
+                            <p><i class="fas fa-trophy"></i> Você está na sequência semanal!</p>
+                        </div>
+                        <button class="botao botao-contorno mt-10" (click)="mostrarPagina('calendario')">
+                            <i class="fas fa-calendar-alt"></i> Ver Calendário
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Próxima Tarefa -->
+            <div class="cartao-dashboard mt-30">
+                <h3><i class="fas fa-calendar-check"></i> Próxima Tarefa</h3>
+                <div class="proxima-sessao" *ngIf="proximaTarefa; else semProximaTarefa">
+                    <h4>{{ traduzirTipoTarefa(proximaTarefa.tipo) }}</h4>
+                    <p><i class="far fa-calendar"></i> {{ formatarData(proximaTarefa.data) }}</p>
+                    <p><i class="fas fa-info-circle"></i> {{ proximaTarefa.descricao }}</p>
+                    <p><i class="fas fa-star"></i> {{ proximaTarefa.pontos }} pontos</p>
+                </div>
+                <ng-template #semProximaTarefa>
+                    <p>Nenhuma tarefa futura agendada.</p>
+                    <button class="botao botao-contorno mt-20" (click)="mostrarPagina('calendario')">
+                        <i class="fas fa-plus-circle"></i> Adicionar Tarefa no Calendário
+                    </button>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendário -->
+    <div class="pagina" [class.ativo]="pagina === 'calendario'">
+        <div class="pagina-calendario container">
+            <div class="cabecalho-calendario">
+                <h1>Calendário de Atividades</h1>
+                <div class="navegacao-mes">
+                    <button (click)="mesAnterior()" class="botao botao-contorno">
+                        <i class="fas fa-chevron-left"></i> Mês Anterior
+                    </button>
+                    <div class="mes-atual">{{ mesAtual }}</div>
+                    <button (click)="mesProximo()" class="botao botao-contorno">
+                        Próximo Mês <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div>
+                    <button class="botao botao-primario" (click)="irParaHoje()">
+                        <i class="fas fa-calendar-day"></i> Ir para Hoje
+                    </button>
+                    <button class="botao botao-sucesso ml-20" (click)="mostrarPagina('dashboard')">
+                        <i class="fas fa-home"></i> Voltar ao Dashboard
+                    </button>
+                </div>
+            </div>
+            
+            <div class="calendario">
+                <div class="dias-semana">
+                    <div *ngFor="let dia of ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']">{{ dia }}</div>
+                </div>
+                <div class="dias-mes">
+                    <div *ngFor="let diaInfo of diasCalendario"
+                         [class]="getClassesDia(diaInfo)"
+                         (click)="abrirModalTarefa(diaInfo.dia)">
+                        <div *ngIf="!diaInfo.vazio">
+                            <div class="numero-dia">{{ diaInfo.dia }}</div>
+                            <div *ngFor="let tarefa of diaInfo.tarefas" 
+                                 [class]="getClasseTipoSessao(tarefa.tipo)"
+                                 class="sessao-dia"
+                                 (click)="$event.stopPropagation(); abrirModalEdicaoTarefa(tarefa, $event)">
+                                <div class="conteudo-sessao">
+                                    <div class="info-sessao">
+                                        <i class="fas fa-{{ getIconeTipo(tarefa.tipo) }}"></i>
+                                        <span class="texto-sessao">
+                                            {{ getStatusTarefa(tarefa) === '✓ Confirmada' ? '✓ ' : '' }}{{ traduzirTipoTarefa(tarefa.tipo) }}
+                                        </span>
+                                    </div>
+                                    <div class="acoes-sessao">
+                                        <button class="botao-icone" (click)="abrirModalEdicaoTarefa(tarefa, $event)" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="botao-icone" (click)="removerTarefa(tarefa, $event)" title="Remover">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-20">
+                <div class="legenda-calendario">
+                    <h4><i class="fas fa-key"></i> Legenda:</h4>
+                    <div class="itens-legenda">
+                        <div class="item-legenda">
+                            <div class="sessao-hidratacao legenda-icone"></div>
+                            <span>Hidratação</span>
+                        </div>
+                        <div class="item-legenda">
+                            <div class="sessao-nutricao legenda-icone"></div>
+                            <span>Nutrição</span>
+                        </div>
+                        <div class="item-legenda">
+                            <div class="sessao-reconstrucao legenda-icone"></div>
+                            <span>Reconstrução</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="instrucoes mt-20">
+                    <p><i class="fas fa-info-circle"></i> <strong>Como usar:</strong></p>
+                    <ul>
+                        <li><i class="fas fa-mouse-pointer"></i> Clique em um dia para adicionar uma atividade</li>
+                        <li><i class="fas fa-edit"></i> Clique em uma atividade para editá-la</li>
+                        <li><i class="fas fa-trash-alt"></i> Use o ícone de lixeira para remover atividades</li>
+                        <li><i class="fas fa-check-circle"></i> No Dashboard, marque as atividades como feitas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar tarefa -->
+    <div class="modal-sessao" [class.ativo]="modalAberto">
+        <div class="modal-conteudo">
+            <div class="modal-cabecalho">
+                <h3><i class="fas fa-plus-circle"></i> Adicionar Atividade</h3>
+                <button class="fechar-modal" (click)="fecharModal()">&times;</button>
+            </div>
+            <div class="modal-corpo">
+                <p><strong><i class="far fa-calendar"></i> Data:</strong> {{ dataSelecionadaModal ? formatarData(dataSelecionadaModal) : '' }}</p>
+                <div class="tipo-sessao">
+                    <h4><i class="fas fa-tasks"></i> Tipo de Tratamento:</h4>
+                    <div class="opcoes-sessao">
+                        <div class="opcao-sessao" 
+                             [class.selecionada]="tipoTarefaSelecionado === TipoTarefa.HIDRATACAO"
+                             (click)="selecionarTipoTarefa(TipoTarefa.HIDRATACAO)">
+                            <i class="fas fa-tint"></i>
+                            <span>Hidratação</span>
+                        </div>
+                        <div class="opcao-sessao" 
+                             [class.selecionada]="tipoTarefaSelecionado === TipoTarefa.NUTRICAO"
+                             (click)="selecionarTipoTarefa(TipoTarefa.NUTRICAO)">
+                            <i class="fas fa-seedling"></i>
+                            <span>Nutrição</span>
+                        </div>
+                        <div class="opcao-sessao" 
+                             [class.selecionada]="tipoTarefaSelecionado === TipoTarefa.RECONSTRUCAO"
+                             (click)="selecionarTipoTarefa(TipoTarefa.RECONSTRUCAO)">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Reconstrução</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-rodape">
+                <button class="botao botao-contorno" (click)="fecharModal()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button class="botao botao-primario" (click)="salvarTarefa()">
+                    <i class="fas fa-save"></i> Salvar Atividade
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar tarefa -->
+    <div class="modal-sessao" [class.ativo]="modalEdicaoAberto">
+        <div class="modal-conteudo">
+            <div class="modal-cabecalho">
+                <h3><i class="fas fa-edit"></i> Editar Atividade</h3>
+                <button class="fechar-modal" (click)="fecharModal()">&times;</button>
+            </div>
+            <div class="modal-corpo">
+                <p><strong><i class="far fa-calendar"></i> Data:</strong> {{ dataSelecionadaModal ? formatarData(dataSelecionadaModal) : '' }}</p>
+                <div class="tipo-sessao">
+                    <h4><i class="fas fa-tasks"></i> Tipo de Tratamento:</h4>
+                    <div class="opcoes-sessao">
+                        <div class="opcao-sessao" 
+                             [class.selecionada]="tipoTarefaSelecionado === TipoTarefa.HIDRATACAO"
+                             (click)="selecionarTipoTarefa(TipoTarefa.HIDRATACAO)">
+                            <i class="fas fa-tint"></i>
+                            <span>Hidratação</span>
+                        </div>
+                        <div class="opcao-sessao" 
+                             [class.selecionada]="tipoTarefaSelecionado === TipoTarefa.NUTRICAO"
+                             (click)="selecionarTipoTarefa(TipoTarefa.NUTRICAO)">
+                            <i class="fas fa-seedling"></i>
+                            <span>Nutrição</span>
+                        </div>
+                        <div class="opcao-sessao" 
+                             [class.selecionada]="tipoTarefaSelecionado === TipoTarefa.RECONSTRUCAO"
+                             (click)="selecionarTipoTarefa(TipoTarefa.RECONSTRUCAO)">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Reconstrução</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-rodape">
+                <button class="botao botao-contorno" (click)="fecharModal()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button class="botao botao-primario" (click)="atualizarTarefa()">
+                    <i class="fas fa-save"></i> Atualizar Atividade
+                </button>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,11 +1,12 @@
-<div class="container">
+<form [formGroup]="formName">
+    <div class="container">
     <h1>HairPlanner</h1>
     <p class="subtitle">
       Vamos conhecer seu cabelo para criar um cronograma perfeito
     </p>
   
     <!-- Pergunta 1 -->
-    <div class="card">
+    <!-- <div class="card">
       <h2>Qual a curvatura do seu cabelo?</h2>
       <div class="options">
         <button
@@ -16,11 +17,11 @@
           {{ c }}
         </button>
       </div>
-    </div>
+    </div> -->
   
     <!-- Pergunta 2 -->
     <div class="card">
-      <h2>Quanto o seu cabelo é seco?</h2>
+      <h2>Como você descreveria o nível de ressecamento do seu cabelo</h2>
       <div class="scale">
         <button
           *ngFor="let n of escala"
@@ -62,4 +63,12 @@
   
     <button class="submit" (click)="enviar()">Finalizar</button>
   </div>
+</form>
+
+
+
+<!-- <form [formGroup]="formName">
+    <input id="filme" formControlName="filme" type="text" placeholder="Nome do Filme" />
+    <button type="submit" [disabled]="formName.invalid" (click)="obterFilmePeloNome()">Buscar</button>
+</form> -->
   

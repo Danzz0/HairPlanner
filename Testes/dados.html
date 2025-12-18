@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HairPlanner - Cadastro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primaria: #9c6eff;
+            --primaria-escura: #7c4dff;
+            --primaria-clara: #f0eaff;
+            --clara: #f9f7ff;
+            --escura: #3a3042;
+            --cinza: #e0dde5;
+            --sucesso: #4cd964;
+            --cartao-fundo: #ffffff;
+        }
+        
+        body {
+            background-color: var(--clara);
+            color: var(--escura);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        /* Cabeçalho */
+        .cabecalho {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--primaria);
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+        
+        .logo-icone {
+            background-color: var(--primaria);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .subtitulo {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Layout principal */
+        .conteudo-principal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: stretch;
+        }
+        
+        .container-ilustracao {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--primaria-clara);
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(156, 110, 255, 0.15);
+        }
+        
+        .ilustracao {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .ilustracao h2 {
+            color: var(--primaria);
+            margin-top: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .ilustracao p {
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+        
+        .container-formulario {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--cartao-fundo);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Campos de formulário */
+        .titulo-formulario {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--escura);
+        }
+        
+        .subtitulo-formulario {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .grupo-formulario {
+            margin-bottom: 25px;
+        }
+        
+        .linha-formulario {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .linha-formulario .grupo-formulario {
+            flex: 1;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--escura);
+        }
+        
+        .container-input {
+            position: relative;
+        }
+        
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--cinza);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: white;
+        }
+        
+        input:focus {
+            border-color: var(--primaria);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(156, 110, 255, 0.1);
+        }
+        
+        .input-icone {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .alternar-senha {
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .alternar-senha:hover {
+            color: var(--primaria);
+        }
+        
+        /* Botões */
+        .container-botao {
+            margin-top: 30px;
+        }
+        
+        .botao {
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .botao-primario {
+            background-color: var(--primaria);
+            color: white;
+        }
+        
+        .botao-primario:hover {
+            background-color: var(--primaria-escura);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(156, 110, 255, 0.3);
+        }
+        
+        /* Rodapé */
+        .rodape {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid var(--cinza);
+            margin-top: 20px;
+        }
+        
+        .nomes-equipe {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .nome-equipe {
+            background-color: rgba(156, 110, 255, 0.1);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--primaria);
+        }
+        
+        /* Links de ação */
+        .links-acao {
+            text-align: center;
+            margin-top: 25px;
+        }
+        
+        .link-acao {
+            color: var(--primaria);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .link-acao:hover {
+            text-decoration: underline;
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsividade */
+        @media (max-width: 900px) {
+            .conteudo-principal {
+                flex-direction: column;
+            }
+            
+            .container-ilustracao, .container-formulario {
+                width: 100%;
+            }
+            
+            .titulo-formulario {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .container-ilustracao, .container-formulario {
+                padding: 25px;
+            }
+            
+            .linha-formulario {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .botao {
+                padding: 16px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Validação de formulário */
+        .mensagem-erro {
+            color: #ff4757;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        input.erro {
+            border-color: #ff4757;
+        }
+        
+        /* Sucesso */
+        .mensagem-sucesso {
+            color: var(--sucesso);
+            font-weight: 600;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cabecalho">
+            <a href="#" class="logo">
+                <div class="logo-icone">
+                    <i class="fas fa-spa"></i>
+                </div>
+                HairPlanner
+            </a>
+            <p class="subtitulo">Crie sua conta para começar seu cronograma capilar personalizado</p>
+        </div>
+        
+        <div class="conteudo-principal">
+            <!-- Ilustração -->
+            <div class="container-ilustracao">
+                <div class="ilustracao">
+                    <div style="position: relative;">
+                        <i class="fas fa-user-circle" style="font-size: 180px; color: var(--primaria); opacity: 0.8;"></i>
+                        <div style="position: absolute; bottom: 10px; right: 10px; width: 60px; height: 60px; background-color: var(--primaria); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <h2>Cadastre-se no HairPlanner</h2>
+                    <p>Preencha seus dados básicos para criar sua conta e começar a cuidar do seu cabelo.</p>
+                    
+                    <div style="margin-top: 40px; text-align: left; width: 100%; max-width: 350px;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                            <div style="width: 40px; height: 40px; background-color: var(--primaria); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Cronograma personalizado</div>
+                                <div style="font-size: 0.9rem; color: #666;">Baseado no seu tipo de cabelo</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                            <div style="width: 40px; height: 40px; background-color: var(--primaria); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Lembretes automáticos</div>
+                                <div style="font-size: 0.9rem; color: #666;">Nunca esqueça dos cuidados</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 40px; height: 40px; background-color: var(--primaria); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Acompanhe sua evolução</div>
+                                <div style="font-size: 0.9rem; color: #666;">Veja o progresso do seu cabelo</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Formulário de Cadastro -->
+            <div class="container-formulario">
+                <h2 class="titulo-formulario">Criar sua conta</h2>
+                <p class="subtitulo-formulario">Preencha seus dados básicos</p>
+                
+                <form id="formularioCadastro">
+                    <div class="grupo-formulario">
+                        <label for="nome">Nome completo</label>
+                        <div class="container-input">
+                            <input type="text" id="nome" placeholder="Digite seu nome completo">
+                            <i class="fas fa-user input-icone"></i>
+                        </div>
+                        <div class="mensagem-erro" id="erro-nome">Por favor, digite seu nome completo</div>
+                    </div>
+                    
+                    <div class="grupo-formulario">
+                        <label for="email">E-mail</label>
+                        <div class="container-input">
+                            <input type="email" id="email" placeholder="seu@email.com">
+                            <i class="fas fa-envelope input-icone"></i>
+                        </div>
+                        <div class="mensagem-erro" id="erro-email">Por favor, digite um e-mail válido</div>
+                    </div>
+                    
+                    <div class="linha-formulario">
+                        <div class="grupo-formulario">
+                            <label for="senha">Senha</label>
+                            <div class="container-input">
+                                <input type="password" id="senha" placeholder="Crie uma senha">
+                                <i class="fas fa-lock input-icone"></i>
+                                <i class="fas fa-eye alternar-senha input-icone" id="alternarSenha"></i>
+                            </div>
+                            <div class="mensagem-erro" id="erro-senha">A senha deve ter pelo menos 6 caracteres</div>
+                        </div>
+                        
+                        <div class="grupo-formulario">
+                            <label for="confirmarSenha">Confirmar senha</label>
+                            <div class="container-input">
+                                <input type="password" id="confirmarSenha" placeholder="Repita a senha">
+                                <i class="fas fa-lock input-icone"></i>
+                                <i class="fas fa-eye alternar-senha input-icone" id="alternarConfirmarSenha"></i>
+                            </div>
+                            <div class="mensagem-erro" id="erro-confirmarSenha">As senhas não coincidem</div>
+                        </div>
+                    </div>
+                    
+                    <div class="linha-formulario">
+                        <div class="grupo-formulario">
+                            <label for="cep">CEP</label>
+                            <div class="container-input">
+                                <input type="text" id="cep" placeholder="00000-000" maxlength="9">
+                                <i class="fas fa-map-marker-alt input-icone"></i>
+                            </div>
+                            <div class="mensagem-erro" id="erro-cep">Por favor, digite um CEP válido</div>
+                        </div>
+                        
+                        <div class="grupo-formulario">
+                            <label for="telefone">Telefone</label>
+                            <div class="container-input">
+                                <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+                                <i class="fas fa-phone input-icone"></i>
+                            </div>
+                            <div class="mensagem-erro" id="erro-telefone">Por favor, digite um telefone válido</div>
+                        </div>
+                    </div>
+                    
+                    <div class="container-botao">
+                        <button type="submit" class="botao botao-primario">
+                            <i class="fas fa-user-plus"></i> Criar Conta
+                        </button>
+                    </div>
+                    
+                    <div class="mensagem-sucesso" id="mensagemSucesso" style="display: none;">
+                        Cadastro realizado com sucesso! Redirecionando...
+                    </div>
+                </form>
+                
+                <div class="links-acao">
+                    <p>Já tem uma conta? <a href="#" class="link-acao" id="linkLogin">Faça login</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rodapé -->
+        <div class="rodape">
+            <p>Projeto HairPlanner - Sistema de cronograma capilar personalizado</p>
+            <div class="nomes-equipe">
+                <span class="nome-equipe">Danilo Lima Gomes</span>
+                <span class="nome-equipe">João Lucas Marcelino</span>
+                <span class="nome-equipe">Myllena Pinheiro</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            inicializarFormulario();
+            inicializarAlternadoresSenha();
+            inicializarMascaras();
+            inicializarLinkLogin();
+        });
+
+        // Inicializar formulário
+        function inicializarFormulario() {
+            document.getElementById('formularioCadastro').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validarFormulario()) {
+                    // Obter dados do formulário
+                    const dadosUsuario = {
+                        nome: document.getElementById('nome').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        cep: document.getElementById('cep').value,
+                        telefone: document.getElementById('telefone').value
+                    };
+                    
+                    // Mostrar mensagem de sucesso
+                    const mensagemSucesso = document.getElementById('mensagemSucesso');
+                    mensagemSucesso.style.display = 'block';
+                    
+                    // Simular envio dos dados
+                    console.log('Dados do usuário:', dadosUsuario);
+                    
+                    // Simular redirecionamento para página de perguntas
+                    setTimeout(() => {
+                        alert('Cadastro realizado com sucesso! Agora vamos conhecer melhor seu cabelo.');
+                        // Em produção, redirecionaria para a página de perguntas
+                        // window.location.href = 'perguntas-cabelo.html';
+                    }, 1500);
+                }
+            });
+        }
+
+        // Validar formulário
+        function validarFormulario() {
+            let formularioValido = true;
+            
+            // Limpar erros anteriores
+            limparErros();
+            
+            // Validar nome
+            const nome = document.getElementById('nome').value.trim();
+            if (nome.length < 3) {
+                mostrarErro('erro-nome', 'Por favor, digite um nome válido (mínimo 3 caracteres)');
+                marcarCampoComoErro('nome');
+                formularioValido = false;
+            }
+            
+            // Validar e-mail
+            const email = document.getElementById('email').value.trim();
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regexEmail.test(email)) {
+                mostrarErro('erro-email', 'Por favor, digite um e-mail válido');
+                marcarCampoComoErro('email');
+                formularioValido = false;
+            }
+            
+            // Validar senha
+            const senha = document.getElementById('senha').value;
+            if (senha.length < 6) {
+                mostrarErro('erro-senha', 'A senha deve ter pelo menos 6 caracteres');
+                marcarCampoComoErro('senha');
+                formularioValido = false;
+            }
+            
+            // Validar confirmação de senha
+            const confirmarSenha = document.getElementById('confirmarSenha').value;
+            if (senha !== confirmarSenha) {
+                mostrarErro('erro-confirmarSenha', 'As senhas não coincidem');
+                marcarCampoComoErro('confirmarSenha');
+                formularioValido = false;
+            }
+            
+            // Validar CEP
+            const cep = document.getElementById('cep').value.replace(/\D/g, '');
+            if (cep.length !== 8) {
+                mostrarErro('erro-cep', 'Por favor, digite um CEP válido (8 dígitos)');
+                marcarCampoComoErro('cep');
+                formularioValido = false;
+            }
+            
+            // Validar telefone
+            const telefone = document.getElementById('telefone').value.replace(/\D/g, '');
+            if (telefone.length < 10 || telefone.length > 11) {
+                mostrarErro('erro-telefone', 'Por favor, digite um telefone válido (10 ou 11 dígitos)');
+                marcarCampoComoErro('telefone');
+                formularioValido = false;
+            }
+            
+            return formularioValido;
+        }
+
+        // Mostrar mensagem de erro
+        function mostrarErro(idElemento, mensagem) {
+            const elementoErro = document.getElementById(idElemento);
+            elementoErro.textContent = mensagem;
+            elementoErro.style.display = 'block';
+        }
+
+        // Marcar campo como erro
+        function marcarCampoComoErro(idCampo) {
+            document.getElementById(idCampo).classList.add('erro');
+        }
+
+        // Limpar todos os erros
+        function limparErros() {
+            // Limpar mensagens de erro
+            document.querySelectorAll('.mensagem-erro').forEach(element => {
+                element.style.display = 'none';
+            });
+            
+            // Remover marcação de erro dos campos
+            document.querySelectorAll('input.erro').forEach(input => {
+                input.classList.remove('erro');
+            });
+            
+            // Limpar mensagem de sucesso
+            document.getElementById('mensagemSucesso').style.display = 'none';
+        }
+
+        // Alternar visibilidade da senha
+        function inicializarAlternadoresSenha() {
+            // Senha principal
+            const alternarSenha = document.getElementById('alternarSenha');
+            const senha = document.getElementById('senha');
+            
+            alternarSenha.addEventListener('click', function() {
+                const tipo = senha.getAttribute('type') === 'password' ? 'text' : 'password';
+                senha.setAttribute('type', tipo);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+            
+            // Confirmação de senha
+            const alternarConfirmarSenha = document.getElementById('alternarConfirmarSenha');
+            const confirmarSenha = document.getElementById('confirmarSenha');
+            
+            alternarConfirmarSenha.addEventListener('click', function() {
+                const tipo = confirmarSenha.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmarSenha.setAttribute('type', tipo);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+
+        // Inicializar máscaras dos campos
+        function inicializarMascaras() {
+            // Máscara para CEP
+            document.getElementById('cep').addEventListener('input', function(e) {
+                let valor = e.target.value.replace(/\D/g, '');
+                
+                if (valor.length > 5) {
+                    valor = valor.replace(/^(\d{5})(\d{0,3}).*/, '$1-$2');
+                }
+                
+                e.target.value = valor;
+            });
+            
+            // Máscara para telefone
+            document.getElementById('telefone').addEventListener('input', function(e) {
+                let valor = e.target.value.replace(/\D/g, '');
+                
+                if (valor.length > 10) {
+                    valor = valor.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+                } else if (valor.length > 6) {
+                    valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+                } else if (valor.length > 2) {
+                    valor = valor.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+                } else if (valor.length > 0) {
+                    valor = valor.replace(/^(\d*)/, '($1');
+                }
+                
+                e.target.value = valor;
+            });
+            
+            // Buscar endereço pelo CEP (simulação)
+            document.getElementById('cep').addEventListener('blur', function() {
+                const cep = this.value.replace(/\D/g, '');
+                
+                if (cep.length === 8) {
+                    // Simulação de busca de CEP
+                    console.log(`Buscando endereço para CEP: ${cep}`);
+                    // Em produção, faria uma requisição para uma API de CEP
+                }
+            });
+        }
+
+        // Inicializar link de login
+        function inicializarLinkLogin() {
+            document.getElementById('linkLogin').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Página de login em desenvolvimento. Por enquanto, use o formulário de cadastro.');
+            });
+        }
+
+        // Dados de exemplo para teste rápido
+        console.log('Para teste rápido, preencha com:');
+        console.log('Nome: Maria Silva');
+        console.log('E-mail: maria@exemplo.com');
+        console.log('Senha: 123456');
+        console.log('CEP: 12345-678');
+        console.log('Telefone: (11) 98765-4321');
+    </script>
+</body>
+</html>

@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HairPlanner - Teste de Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primaria: #8a4fff;
+            --primaria-escura: #6c3ad1;
+            --primaria-clara: #f0edff;
+            --clara: #f8f7ff;
+            --escura: #3a3042;
+            --cinza: #e0dde5;
+            --sucesso: #4cd964;
+            --aviso: #ff9500;
+            --info: #5ac8fa;
+        }
+        
+        body {
+            background-color: var(--clara);
+            color: var(--escura);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        cabecalho {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .conteudo-cabecalho {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--primaria);
+            text-decoration: none;
+        }
+        
+        .logo-icone {
+            background-color: var(--primaria);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .links-navegacao {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .links-navegacao a {
+            color: var(--escura);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .links-navegacao a:hover, .links-navegacao a.ativo {
+            color: var(--primaria);
+        }
+        
+        .avatar-usuario {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primaria-clara);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primaria);
+            font-weight: 600;
+        }
+        
+        .botao {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .botao-primario {
+            background-color: var(--primaria);
+            color: white;
+        }
+        
+        .botao-primario:hover {
+            background-color: var(--primaria-escura);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 79, 255, 0.3);
+        }
+        
+        .botao-contorno {
+            background-color: transparent;
+            color: var(--primaria);
+            border: 2px solid var(--primaria);
+        }
+        
+        .botao-contorno:hover {
+            background-color: rgba(138, 79, 255, 0.08);
+        }
+        
+        .botao-sucesso {
+            background-color: var(--sucesso);
+            color: white;
+        }
+        
+        .pagina {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .pagina.ativo {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .dashboard {
+            padding: 40px 0;
+        }
+        
+        .cabecalho-dashboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .cabecalho-dashboard h1 {
+            color: var(--escura);
+            font-size: 2.2rem;
+        }
+        
+        .cartoes-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .cartao-dashboard {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .cartao-dashboard h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--escura);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .proxima-sessao {
+            background-color: var(--primaria-clara);
+            border-left: 4px solid var(--primaria);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+        }
+        
+        .proxima-sessao h4 {
+            margin-bottom: 10px;
+            color: var(--escura);
+        }
+        
+        .proxima-sessao p {
+            color: #666;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .circulo-progresso {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .circulo-progresso svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        
+        .circulo-progresso circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+        
+        .circulo-progresso-fundo {
+            stroke: var(--cinza);
+        }
+        
+        .circulo-progresso-preenchimento {
+            stroke: var(--primaria);
+            stroke-dasharray: 251;
+            stroke-dashoffset: calc(251 - (251 * var(--progresso)) / 100);
+        }
+        
+        .texto-progresso {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--escura);
+        }
+        
+        .pagina-calendario {
+            padding: 40px 0;
+        }
+        
+        .cabecalho-calendario {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .navegacao-mes {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .navegacao-mes button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primaria);
+        }
+        
+        .mes-atual {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: var(--escura);
+        }
+        
+        .calendario {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dias-semana {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--escura);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--cinza);
+        }
+        
+        .dias-mes {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .dia-calendario {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dia-calendario:hover {
+            background-color: var(--primaria-clara);
+        }
+        
+        .dia-calendario.vazio {
+            background-color: transparent;
+            cursor: default;
+        }
+        
+        .numero-dia {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .sessao-dia {
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .sessao-hidratacao {
+            background-color: rgba(76, 217, 100, 0.2);
+            color: #2a8b3e;
+        }
+        
+        .sessao-nutricao {
+            background-color: rgba(255, 149, 0, 0.2);
+            color: #cc7700;
+        }
+        
+        .sessao-reconstrucao {
+            background-color: rgba(90, 200, 250, 0.2);
+            color: #0088cc;
+        }
+        
+        .dia-hoje {
+            background-color: var(--primaria-clara);
+            color: var(--primaria);
+            font-weight: 700;
+        }
+        
+        .pagina-questionario {
+            padding: 40px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cabecalho-questionario {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .barra-progresso-questionario {
+            height: 8px;
+            background-color: var(--cinza);
+            border-radius: 4px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        
+        .preenchimento-barra-progresso {
+            height: 100%;
+            background-color: var(--primaria);
+            width: 0%;
+        }
+        
+        .etapa-questao {
+            display: none;
+        }
+        
+        .etapa-questao.ativo {
+            display: block;
+        }
+        
+        .questao {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .opcoes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .opcao {
+            padding: 20px;
+            border: 2px solid var(--cinza);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .opcao:hover, .opcao.selecionada {
+            border-color: var(--primaria);
+            background-color: var(--primaria-clara);
+        }
+        
+        .configuracao-cronograma {
+            padding: 40px 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .cabecalho-cronograma {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .tipos-tratamento {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .cartao-tratamento {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .cartao-tratamento:hover {
+            transform: translateY(-5px);
+        }
+        
+        .icone-tratamento {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+            color: white;
+        }
+        
+        .icone-hidratacao {
+            background-color: var(--sucesso);
+        }
+        
+        .icone-nutricao {
+            background-color: var(--aviso);
+        }
+        
+        .icone-reconstrucao {
+            background-color: var(--info);
+        }
+        
+        .seletor-frequencia {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .botao-frequencia {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--cinza);
+            background: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .botao-frequencia.selecionado {
+            background-color: var(--primaria);
+            color: white;
+            border-color: var(--primaria);
+        }
+        
+        .seletor-semanas {
+            margin-top: 40px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .controle-deslizante-semanas {
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        .pagina-checkin {
+            padding: 40px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cabecalho-checkin {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .cartao-checkin {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .icone-checkin {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 35px;
+            color: white;
+        }
+        
+        .notas-checkin textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 2px solid var(--cinza);
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            margin-top: 15px;
+        }
+        
+        .notas-checkin textarea:focus {
+            border-color: var(--primaria);
+            outline: none;
+        }
+        
+        @media (max-width: 768px) {
+            .cartoes-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .dias-mes {
+                gap: 2px;
+            }
+            
+            .sessao-dia {
+                font-size: 0.7rem;
+                padding: 2px 4px;
+            }
+        }
+        
+        .mt-20 { margin-top: 20px; }
+        .mt-30 { margin-top: 30px; }
+        .texto-centralizado { text-align: center; }
+    </style>
+</head>
+<body>
+    <cabecalho>
+        <div class="container">
+            <div class="conteudo-cabecalho">
+                <a href="#" class="logo" id="linkInicio">
+                    <div class="logo-icone">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    HairPlanner
+                </a>
+                
+                <div class="links-navegacao">
+                    <a href="#" data-pagina="dashboard" class="ativo">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                    <a href="#" data-pagina="calendario">
+                        <i class="fas fa-calendar-alt"></i> Calendário
+                    </a>
+                    <a href="#" data-pagina="configuracao-cronograma">
+                        <i class="fas fa-cog"></i> Cronograma
+                    </a>
+                </div>
+                
+                <div class="avatar-usuario">MP</div>
+            </div>
+        </div>
+    </cabecalho>
+
+    <main>
+        <!-- Dashboard -->
+        <div class="pagina ativo" id="pagina-dashboard">
+            <div class="dashboard container">
+                <div class="cabecalho-dashboard">
+                    <div>
+                        <h1>Dashboard</h1>
+                        <p>Bem-vinda de volta, Myllena!</p>
+                    </div>
+                    <button class="botao botao-primario" id="botaoCheckin">
+                        <i class="fas fa-check-circle"></i> Fazer Check-in
+                    </button>
+                </div>
+                
+                <div class="cartoes-dashboard">
+                    <div class="cartao-dashboard">
+                        <h3><i class="fas fa-calendar-check"></i> Próxima Sessão</h3>
+                        <div class="proxima-sessao">
+                            <h4>Hidratação</h4>
+                            <p><i class="far fa-calendar"></i> Amanhã, 15 de Novembro</p>
+                            <p><i class="far fa-clock"></i> Recomendado: 30-40 minutos</p>
+                        </div>
+                        <button class="botao botao-contorno" id="botaoVerCalendario">
+                            <i class="fas fa-calendar-alt"></i> Ver Calendário
+                        </button>
+                    </div>
+                    
+                    <div class="cartao-dashboard">
+                        <h3><i class="fas fa-chart-line"></i> Progresso do Ciclo</h3>
+                        <div class="circulo-progresso" style="--progresso: 65">
+                            <svg>
+                                <circle class="circulo-progresso-fundo" cx="40" cy="40" r="36"></circle>
+                                <circle class="circulo-progresso-preenchimento" cx="40" cy="40" r="36"></circle>
+                            </svg>
+                            <div class="texto-progresso">65%</div>
+                        </div>
+                        <p class="texto-centralizado mt-20">13 de 20 sessões concluídas</p>
+                    </div>
+                    
+                    <div class="cartao-dashboard">
+                        <h3><i class="fas fa-award"></i> Estatísticas</h3>
+                        <p><strong>Sessões concluídas:</strong> 13</p>
+                        <p><strong>Dias consecutivos:</strong> 7</p>
+                        <p><strong>Ciclo atual:</strong> 3ª semana de 4</p>
+                        <p><strong>Próxima reconstrução:</strong> em 10 dias</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendário -->
+        <div class="pagina" id="pagina-calendario">
+            <div class="pagina-calendario container">
+                <div class="cabecalho-calendario">
+                    <h1>Calendário</h1>
+                    <div class="navegacao-mes">
+                        <button id="mesAnterior"><i class="fas fa-chevron-left"></i></button>
+                        <div class="mes-atual" id="mesAtual">Novembro 2023</div>
+                        <button id="mesProximo"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                
+                <div class="calendario">
+                    <div class="dias-semana">
+                        <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+                    </div>
+                    <div class="dias-mes" id="diasCalendario"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Questionário -->
+        <div class="pagina" id="pagina-questionario">
+            <div class="pagina-questionario container">
+                <div class="cabecalho-questionario">
+                    <h1>Questionário Inicial</h1>
+                    <p>Responda para personalizar seu cronograma</p>
+                </div>
+                
+                <div class="barra-progresso-questionario">
+                    <div class="preenchimento-barra-progresso" id="progressoQuestionario"></div>
+                </div>
+                
+                <div class="etapa-questao ativo" id="etapa1">
+                    <div class="questao">
+                        <h3>1. Qual seu tipo de cabelo?</h3>
+                        <div class="opcoes">
+                            <div class="opcao" data-valor="liso">Liso</div>
+                            <div class="opcao" data-valor="ondulado">Ondulado</div>
+                            <div class="opcao" data-valor="cacheado">Cacheado</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="etapa-questao" id="etapa2">
+                    <div class="questao">
+                        <h3>2. Como você descreveria a espessura dos fios?</h3>
+                        <div class="opcoes">
+                            <div class="opcao" data-valor="fino">Fino</div>
+                            <div class="opcao" data-valor="medio">Médio</div>
+                            <div class="opcao" data-valor="grosso">Grosso</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navegacao-questionario">
+                    <button class="botao botao-contorno" id="questaoAnterior" style="display:none">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </button>
+                    <button class="botao botao-primario" id="proximaQuestao">
+                        Próxima <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuração do Cronograma -->
+        <div class="pagina" id="pagina-configuracao-cronograma">
+            <div class="configuracao-cronograma container">
+                <div class="cabecalho-cronograma">
+                    <h1>Configurar Cronograma</h1>
+                    <p>Escolha a frequência de cada tratamento</p>
+                </div>
+                
+                <div class="tipos-tratamento">
+                    <div class="cartao-tratamento">
+                        <div class="icone-tratamento icone-hidratacao">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <h3>Hidratação</h3>
+                        <p>Repõe a água dos fios, devolvendo maciez e brilho.</p>
+                        <div class="seletor-frequencia">
+                            <button class="botao-frequencia selecionado" data-tratamento="hidratacao" data-frequencia="3">3</button>
+                        </div>
+                        <div>vezes por semana</div>
+                    </div>
+                    
+                    <div class="cartao-tratamento">
+                        <div class="icone-tratamento icone-nutricao">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>Nutrição</h3>
+                        <p>Repõe lipídios e óleos naturais, controle do frizz.</p>
+                        <div class="seletor-frequencia">
+                            <button class="botao-frequencia selecionado" data-tratamento="nutricao" data-frequencia="2">2</button>
+                        </div>
+                        <div>vezes por semana</div>
+                    </div>
+                    
+                    <div class="cartao-tratamento">
+                        <div class="icone-tratamento icone-reconstrucao">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Reconstrução</h3>
+                        <p>Repõe proteínas e massa capilar, fortalece fios.</p>
+                        <div class="seletor-frequencia">
+                            <button class="botao-frequencia selecionado" data-tratamento="reconstrucao" data-frequencia="1">1</button>
+                        </div>
+                        <div>vezes por semana</div>
+                    </div>
+                </div>
+                
+                <div class="seletor-semanas">
+                    <h3>Duração do Ciclo: <span id="valorSemanas">4 semanas</span></h3>
+                    <input type="range" min="2" max="8" value="4" class="controle-deslizante-semanas" id="controleSemanas">
+                    <div class="texto-centralizado">
+                        <button class="botao botao-primario" id="botaoGerarCronograma">
+                            <i class="fas fa-calendar-plus"></i> Gerar Cronograma
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Check-in -->
+        <div class="pagina" id="pagina-checkin">
+            <div class="pagina-checkin container">
+                <div class="cabecalho-checkin">
+                    <h1>Check-in de Tratamento</h1>
+                    <p>Registre a sessão de hoje</p>
+                </div>
+                
+                <div class="cartao-checkin">
+                    <div class="icone-checkin icone-reconstrucao">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2>Reconstrução</h2>
+                    <p><strong>Data:</strong> Quinta-feira, 16 de Novembro de 2023</p>
+                    <p><strong>Tempo recomendado:</strong> 20-30 minutos</p>
+                    
+                    <div class="notas-checkin">
+                        <h3>Observações (opcional)</h3>
+                        <textarea id="notasCheckin" placeholder="Descreva como foi a sessão..."></textarea>
+                    </div>
+                    
+                    <div class="mt-30">
+                        <button class="botao botao-sucesso" id="botaoConfirmarCheckin">
+                            <i class="fas fa-check-circle"></i> Confirmar Check-in
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Estado simplificado
+        const app = {
+            pagina: 'dashboard',
+            questao: 1,
+            mes: new Date().getMonth(),
+            ano: new Date().getFullYear(),
+            respostas: {},
+            cronograma: { hidratacao: 3, nutricao: 2, reconstrucao: 1, semanas: 4 }
+        };
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', init);
+
+        function init() {
+            // Navegação
+            document.querySelectorAll('[data-pagina]').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    mostrarPagina(link.dataset.pagina);
+                    document.querySelectorAll('.links-navegacao a').forEach(a => a.classList.remove('ativo'));
+                    link.classList.add('ativo');
+                });
+            });
+
+            document.getElementById('linkInicio').addEventListener('click', e => {
+                e.preventDefault();
+                mostrarPagina('dashboard');
+            });
+
+            // Botões do dashboard
+            document.getElementById('botaoVerCalendario')?.addEventListener('click', () => mostrarPagina('calendario'));
+            document.getElementById('botaoCheckin')?.addEventListener('click', () => mostrarPagina('checkin'));
+
+            // Questionário
+            initQuestionario();
+            
+            // Calendário
+            initCalendario();
+            
+            // Configuração do cronograma
+            initCronograma();
+            
+            // Check-in
+            document.getElementById('botaoConfirmarCheckin')?.addEventListener('click', () => {
+                const notas = document.getElementById('notasCheckin').value;
+                alert('Check-in confirmado! ' + (notas ? `Notas: ${notas}` : ''));
+                mostrarPagina('dashboard');
+            });
+        }
+
+        function mostrarPagina(pagina) {
+            document.querySelectorAll('.pagina').forEach(p => p.classList.remove('ativo'));
+            document.getElementById(`pagina-${pagina}`).classList.add('ativo');
+            app.pagina = pagina;
+            
+            if (pagina === 'calendario') renderCalendario();
+        }
+
+        // Questionário
+        function initQuestionario() {
+            document.querySelectorAll('.opcao').forEach(opcao => {
+                opcao.addEventListener('click', () => {
+                    opcao.closest('.opcoes').querySelectorAll('.opcao').forEach(o => o.classList.remove('selecionada'));
+                    opcao.classList.add('selecionada');
+                    app.respostas[`q${app.questao}`] = opcao.dataset.valor;
+                });
+            });
+
+            const btnProxima = document.getElementById('proximaQuestao');
+            const btnAnterior = document.getElementById('questaoAnterior');
+
+            btnProxima.addEventListener('click', () => {
+                if (!document.querySelector('.opcao.selecionada')) {
+                    alert('Selecione uma opção!');
+                    return;
+                }
+
+                if (app.questao < 2) {
+                    document.getElementById(`etapa${app.questao}`).classList.remove('ativo');
+                    app.questao++;
+                    document.getElementById(`etapa${app.questao}`).classList.add('ativo');
+                    btnAnterior.style.display = 'inline-flex';
+                    atualizarProgresso();
+                    
+                    if (app.questao === 2) {
+                        btnProxima.innerHTML = 'Finalizar <i class="fas fa-check"></i>';
+                        btnProxima.onclick = () => {
+                            alert('Questionário concluído!');
+                            mostrarPagina('configuracao-cronograma');
+                        };
+                    }
+                }
+            });
+
+            btnAnterior.addEventListener('click', () => {
+                document.getElementById(`etapa${app.questao}`).classList.remove('ativo');
+                app.questao--;
+                document.getElementById(`etapa${app.questao}`).classList.add('ativo');
+                btnProxima.innerHTML = 'Próxima <i class="fas fa-arrow-right"></i>';
+                btnProxima.onclick = null;
+                btnProxima.addEventListener('click', arguments.callee);
+                atualizarProgresso();
+                if (app.questao === 1) btnAnterior.style.display = 'none';
+            });
+
+            function atualizarProgresso() {
+                document.getElementById('progressoQuestionario').style.width = `${(app.questao / 2) * 100}%`;
+            }
+        }
+
+        // Calendário
+        function initCalendario() {
+            document.getElementById('mesAnterior').addEventListener('click', () => {
+                app.mes--;
+                if (app.mes < 0) { app.mes = 11; app.ano--; }
+                renderCalendario();
+            });
+
+            document.getElementById('mesProximo').addEventListener('click', () => {
+                app.mes++;
+                if (app.mes > 11) { app.mes = 0; app.ano++; }
+                renderCalendario();
+            });
+        }
+
+        function renderCalendario() {
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            document.getElementById('mesAtual').textContent = `${meses[app.mes]} ${app.ano}`;
+            
+            const primeiroDia = new Date(app.ano, app.mes, 1);
+            const ultimoDia = new Date(app.ano, app.mes + 1, 0);
+            const diasVazios = primeiroDia.getDay();
+            const totalDias = ultimoDia.getDate();
+            
+            const hoje = new Date();
+            const mesmoMes = hoje.getMonth() === app.mes && hoje.getFullYear() === app.ano;
+            
+            let html = '';
+            
+            // Dias vazios
+            for (let i = 0; i < diasVazios; i++) {
+                html += '<div class="dia-calendario vazio"></div>';
+            }
+            
+            // Dias do mês
+            for (let dia = 1; dia <= totalDias; dia++) {
+                const classes = ['dia-calendario'];
+                if (mesmoMes && dia === hoje.getDate()) classes.push('dia-hoje');
+                
+                html += `<div class="${classes.join(' ')}">
+                    <div class="numero-dia">${dia}</div>`;
+                
+                // Adicionar sessões
+                if (dia % 3 === 0) {
+                    html += '<div class="sessao-dia sessao-hidratacao">Hidratação</div>';
+                } else if (dia % 3 === 1) {
+                    html += '<div class="sessao-dia sessao-nutricao">Nutrição</div>';
+                } else if (dia % 5 === 0) {
+                    html += '<div class="sessao-dia sessao-reconstrucao">Reconstrução</div>';
+                }
+                
+                html += '</div>';
+            }
+            
+            document.getElementById('diasCalendario').innerHTML = html;
+        }
+
+        // Configuração do cronograma
+        function initCronograma() {
+            // Controle deslizante de semanas
+            const slider = document.getElementById('controleSemanas');
+            const valor = document.getElementById('valorSemanas');
+            
+            slider.addEventListener('input', () => {
+                valor.textContent = `${slider.value} semanas`;
+                app.cronograma.semanas = parseInt(slider.value);
+            });
+
+            // Botão gerar cronograma
+            document.getElementById('botaoGerarCronograma').addEventListener('click', () => {
+                alert(`Cronograma gerado!\nHidratação: ${app.cronograma.hidratacao}x/semana\nNutrição: ${app.cronograma.nutricao}x/semana\nReconstrução: ${app.cronograma.reconstrucao}x/semana\nDuração: ${app.cronograma.semanas} semanas`);
+                mostrarPagina('dashboard');
+            });
+        }
+    </script>
+</body>
+</html>
